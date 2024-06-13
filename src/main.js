@@ -13,7 +13,7 @@ form.addEventListener('submit', e => {
   loader.style.visibility = 'visible';
   const search = input.value.trim();
   list.innerHTML = '';
-  if (search !== '' ) {
+  if (search === '' ) {
     iziToast.error({
         message: "The field cannot be empty"
     })
