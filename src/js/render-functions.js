@@ -9,11 +9,9 @@ const lightbox = new SimpleLightbox('.card-link', {
 });
 
 const renderImages = (resultData, list) => {
-  list.innerHTML = '';
-  let li = '';
 
-  resultData.forEach(element => {
-    li += `<li class="card">
+ const murkup = resultData.map(element => {
+    return `<li class="card">
                 <a class="card-link" href="${element.largeImageURL}">
                     <img  class="card-image" src="${element.webformatURL}" alt="${element.tags}" /> 
                 </a>
@@ -48,7 +46,7 @@ const renderImages = (resultData, list) => {
             </li>`;
   });
 
-  list.insertAdjacentHTML('beforeend', li);
+  list.insertAdjacentHTML('beforeend', murkup.join(""));
 
   lightbox.refresh();
 };

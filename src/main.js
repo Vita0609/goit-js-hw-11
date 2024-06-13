@@ -9,40 +9,46 @@ const loader = document.querySelector('.loader-div');
 const list = document.querySelector('.list');
 
 form.addEventListener('submit', e => {
-e.preventDefault();
-loader.style.visibility = 'visible';
-const search = input.value.trim();
-list.innerHTML = '';
-pixApi(search)
-.then(data => {
-const result = data.hits;
-  
-if (result.length !== 0 && search !== '') {
-renderImages(result, list);
-} else {
-iziToast.show({
-title: '',
-message:
-'Sorry, there are no images matching your search query. Please try again!',
-messageColor: 'white',
-backgroundColor: '#E25757',
-position: 'topRight',
- });
-}
-})
-.catch(error => {
- console.error('Помилка при рендері картинок', error);
-iziToast.show({
-title: '',
-message: 'Sorry, check your internet connection!',
-messageColor: 'white',
-backgroundColor: '#E25757',
-position: 'topRight',
-timeout: 5000,
-});
-})
-.finally(() => {
-loader.style.visibility = 'hidden';
-e.target.reset();
-});
+  e.preventDefault();
+  loader.style.visibility = 'visible';
+  const search = input.value.trim();
+  list.innerHTML = '';
+  if (search !== '' ) {
+    iziToast.error({
+        message: "The field cannot be empty"
+    })
+    return; 
+  }
+  pixApi(search)
+    .then(data => {
+      const result = data.hits;
+
+      if (result.length !== 0) {
+        renderImages(result, list);
+      } else {
+        iziToast.show({
+          title: '',
+          message:
+            'Sorry, there are no images matching your search query. Please try again!',
+          messageColor: 'white',
+          backgroundColor: '#E25757',
+          position: 'topRight',
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Помилка при рендері картинок', error);
+      iziToast.show({
+        title: '',
+        message: 'Sorry, check your internet connection!',
+        messageColor: 'white',
+        backgroundColor: '#E25757',
+        position: 'topRight',
+        timeout: 5000,
+      });
+    })
+    .finally(() => {
+      loader.style.visibility = 'hidden';
+      e.target.reset();
+    });
 });

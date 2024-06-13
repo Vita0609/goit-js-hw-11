@@ -15,10 +15,7 @@ const pixApi = data => {
       }
       return response.json();
     })
-    .catch(error => {
-      console.error('Помилка при отриманні даних', error);
-      throw error;
-    });
+    
 };
 
 export default pixApi;
